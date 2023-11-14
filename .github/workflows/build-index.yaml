@@ -1,0 +1,46 @@
+name: Build index
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: build-index
+  cancel-in-progress: true
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tetrateio/circle-checkout@00b04808a3e5c1c3f736c8f7db59f2ab7b97635a # v1.0.0
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        with:
+          path: gh-pages
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Install releaser
+        run: |
+          # install required binaries
+          curl -fSsL https://tetrateio.github.io/tis-releaser/install.sh | sudo TIS_RELEASER_INSTALL=/usr/local bash
+          curl -fsSL https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz | sudo tar xz --strip-components=1 linux-amd64/helm -C /usr/local/bin
+      - name: Build index
+        run: |
+          tis-releaser release charts -d charts --merge gh-pages/index.yaml ${{ github.ref == 'refs/heads/main' && '--upload' || '' }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - if: github.ref == 'refs/heads/main'
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0
+        with:
+          commit_message: Apply automatic update for index.yaml
+          branch: gh-pages
+          repository: gh-pages
+          commit_user_name: tetrate-ci
+          commit_user_email: 52504619+tetrate-ci@users.noreply.github.com
+          commit_author: tetrate-ci <52504619+tetrate-ci@users.noreply.github.com>
