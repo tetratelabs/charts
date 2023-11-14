@@ -16,7 +16,6 @@ jobs:
   build:
     permissions:
       contents: write
-      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: tetrateio/circle-checkout@00b04808a3e5c1c3f736c8f7db59f2ab7b97635a # v1.0.0
@@ -24,6 +23,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
+          ref: gh-pages
           path: gh-pages
           token: ${{ secrets.GH_TOKEN }}
       - name: Install releaser
