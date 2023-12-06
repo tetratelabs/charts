@@ -20,11 +20,17 @@ jobs:
   build:
     permissions:
       contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: tetrateio/circle-checkout@00b04808a3e5c1c3f736c8f7db59f2ab7b97635a # v1.0.0
         with:
           token: ${{ secrets.GH_TOKEN }}
+      - uses: google-github-actions/auth@35b0e87d162680511bf346c299f71c9c5c379033 # v1.1.1
+        with:
+          workload_identity_provider: projects/852480737008/locations/global/workloadIdentityPools/main-pool/providers/github-provider
+          service_account: tetratelabs@tetrate-istio-subscription.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@e30db14379863a8c79331b04a9969f4c1e225e0b # v1.1.1
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: gh-pages
@@ -34,14 +40,24 @@ jobs:
         run: |
           # install required binaries
           curl -fSsL https://tetrateio.github.io/tis-releaser/install.sh | sudo TIS_RELEASER_INSTALL=/usr/local bash
+          curl -fSsL -o cosign https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 && chmod +x cosign && sudo mv cosign /usr/local/bin/cosign
           curl -fsSL https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz | sudo tar xz --strip-components=1 linux-amd64/helm -C /usr/local/bin
+          helm plugin install https://github.com/sigstore/helm-sigstore
+
+          # to satisfy tis-releaser
+          gcloud config set compute/zone us-central1-a
+      - uses: crazy-max/ghaction-import-gpg@82a020f1f7f605c65dd2449b392a52c3fcfef7ef # v6.0.0
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Build index
         run: |
           tis-releaser release charts -d charts --merge gh-pages/index.yaml ${{ github.ref == 'refs/heads/main' && '--upload' || '' }}
           cp -f work/dist/charts/index.yaml gh-pages/index.yaml
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GCLOUD_SKIP: "true"
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          COSIGN_IDENTITY: trustee@tetrate-istio-subscription.iam.gserviceaccount.com
       - if: github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d # v5.0.0
         with:
