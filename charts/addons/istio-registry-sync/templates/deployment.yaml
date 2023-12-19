@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "istio-registry-sync.fullname" . }}
+  labels:
+    {{- include "istio-registry-sync.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "istio-registry-sync.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "istio-registry-sync.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "istio-registry-sync.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          - serve
+          {{- if .Values.consul.endpoint }} 
+          - --consul-endpoint={{ .Values.consul.endpoint }}
+          {{- end }}
+          {{- if .Values.consul.token }}
+          - --consul-token={{ .Values.consul.token }}
+          {{- end }}
+          {{- if .Values.consul.namespace }}
+          - --consul-namespace={{ .Values.consul.namespace }}
+          {{- end }}
+          {{- if .Values.resyncPeriod }}
+          - --resync-period={{ .Values.resyncPeriod }}
+          {{- end }}
+          env:
+          - name: PUBLISH_NAMESPACE
+            {{- if .Values.publishNamespace }}
+            value: {{ .Values.publishNamespace }}
+            {{ else }}
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+            {{- end }}
+          {{- if .Values.cloudmap.region }}
+          - name: AWS_REGION
+            value: {{ .Values.cloudmap.region }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

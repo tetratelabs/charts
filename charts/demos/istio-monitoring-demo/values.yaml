@@ -1,0 +1,68 @@
+grafana:
+  enabled: true
+  fullnameOverride: grafana
+  # Avoid creating a bunch of RBAC rules for features we are not enabling
+  rbac:
+    create: false
+    pspEnabled: false
+
+  # Disable test pods
+  testFramework:
+    enabled: false
+
+  # For istioctl dashboard, we will look for this label
+  podLabels:
+    app: grafana
+    sidecar.istio.io/inject: "false"
+
+  # Demo only, so we will have no authentication
+  admin:
+    existingSecret: ""
+  ldap:
+    existingSecret: true
+  env:
+    GF_SECURITY_ADMIN_USER: "admin"
+    GF_SECURITY_ADMIN_PASSWORD: "admin"
+    GF_AUTH_BASIC_ENABLED: "false"
+    GF_AUTH_ANONYMOUS_ENABLED: "true"
+    GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+
+  # Expose on port 3000 to match the Istio docs
+  service:
+    port: 3000
+
+prometheus:
+  enabled: true
+  # To simplify the deployment, disable non-essential components
+  alertmanager:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  server:
+    podLabels:
+      sidecar.istio.io/inject: "false"
+    persistentVolume:
+      enabled: false
+    # Use port 9090 to match Istio documentation
+    service:
+      servicePort: 9090
+    readinessProbeInitialDelay: 0
+    # Speed up scraping a bit from the default
+    global:
+      scrape_interval: 15s
+
+    # Match legacy addon deployment
+    fullnameOverride: prometheus
+
+    # use dockerhub
+    image:
+      repository: prom/prometheus
+
+kube-state-metrics:
+  enabled: true
+  customLabels:
+    sidecar.istio.io/inject: "false"
