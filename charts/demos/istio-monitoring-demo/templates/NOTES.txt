@@ -1,0 +1,11 @@
+"{{ .Release.Name }}" successfully installed!
+
+To learn more about the release, try:
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+{{ if .Values.grafana.enabled }}
+Running these commands in the shell to make Grafana avaiable to access on localhost:3000:
+
+  $ kubectl --namespace {{ .Release.Namespace }} port-forward svc/grafana 3000:3000
+{{ end }}

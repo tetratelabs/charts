@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "agent.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "agent.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      {{- include "agent.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "agent.labels" . | nindent 8 }}
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: {{ include "agent.serviceAccountName" . }}
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "agent.fullname" . }}
+          image: {{ .Values.image.name }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            readOnlyRootFilesystem: true
+          envFrom:
+            - configMapRef:
+                name: {{ include "agent.fullname" . }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+              hostPort: 3000
+          volumeMounts:
+            - mountPath: /var/tis-agent
+              name: license
+      volumes:
+        - secret:
+            secretName: {{ include "agent.fullname" . }}
+          name: license
