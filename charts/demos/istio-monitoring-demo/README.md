@@ -17,6 +17,12 @@ Helm chart for deploying Istio Monitoring demo
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | grafana.admin.existingSecret | string | `""` |  |
+| grafana.datasources."datasources.yaml".apiVersion | int | `1` |  |
+| grafana.datasources."datasources.yaml".datasources[0].access | string | `"proxy"` |  |
+| grafana.datasources."datasources.yaml".datasources[0].isDefault | bool | `true` |  |
+| grafana.datasources."datasources.yaml".datasources[0].name | string | `"Prometheus"` |  |
+| grafana.datasources."datasources.yaml".datasources[0].type | string | `"prometheus"` |  |
+| grafana.datasources."datasources.yaml".datasources[0].url | string | `"http://prometheus:9090"` |  |
 | grafana.enabled | bool | `true` |  |
 | grafana.env.GF_AUTH_ANONYMOUS_ENABLED | string | `"true"` |  |
 | grafana.env.GF_AUTH_ANONYMOUS_ORG_ROLE | string | `"Admin"` |  |
