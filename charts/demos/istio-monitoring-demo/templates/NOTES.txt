@@ -5,7 +5,7 @@ To learn more about the release, try:
   $ helm get all {{ .Release.Name }}
 
 {{ if .Values.grafana.enabled }}
-Running these commands in the shell to make Grafana avaiable to access on localhost:3000:
+Running these commands in the shell to make Grafana available to access on localhost:3000:
 
   $ kubectl --namespace {{ .Release.Namespace }} port-forward svc/grafana 3000:3000
 {{ end }}
