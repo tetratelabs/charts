@@ -31,6 +31,17 @@ grafana:
   service:
     port: 3000
 
+
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        isDefault: true
+        url: http://prometheus:9090
+
 prometheus:
   enabled: true
   # To simplify the deployment, disable non-essential components

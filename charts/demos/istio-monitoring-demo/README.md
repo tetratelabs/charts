@@ -1,6 +1,6 @@
 # istio-monitoring-demo
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 Helm chart for deploying Istio Monitoring demo
 
@@ -17,6 +17,12 @@ Helm chart for deploying Istio Monitoring demo
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | grafana.admin.existingSecret | string | `""` |  |
+| grafana.datasources."datasources.yaml".apiVersion | int | `1` |  |
+| grafana.datasources."datasources.yaml".datasources[0].access | string | `"proxy"` |  |
+| grafana.datasources."datasources.yaml".datasources[0].isDefault | bool | `true` |  |
+| grafana.datasources."datasources.yaml".datasources[0].name | string | `"Prometheus"` |  |
+| grafana.datasources."datasources.yaml".datasources[0].type | string | `"prometheus"` |  |
+| grafana.datasources."datasources.yaml".datasources[0].url | string | `"http://prometheus:9090"` |  |
 | grafana.enabled | bool | `true` |  |
 | grafana.env.GF_AUTH_ANONYMOUS_ENABLED | string | `"true"` |  |
 | grafana.env.GF_AUTH_ANONYMOUS_ORG_ROLE | string | `"Admin"` |  |
