@@ -1,6 +1,6 @@
 # agent
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: 0.0.3](https://img.shields.io/badge/AppVersion-0.0.3-informational?style=flat-square)
+![Version: 1.0.0-test1](https://img.shields.io/badge/Version-1.0.0--test1-informational?style=flat-square) ![AppVersion: 1.0.0-test1](https://img.shields.io/badge/AppVersion-1.0.0--test1-informational?style=flat-square)
 
 Helm chart for deploying TIS Agent
 
@@ -8,19 +8,28 @@ Helm chart for deploying TIS Agent
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.name | string | `"gcr.io/tetratelabs/tis/agent:v0.0.3@sha256:7118f8b0634c6313e7dfb20804d3c03ff0651eed28085a4f8c3393969808d66d"` |  |
+| image.name | string | `"agent"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.pullSecrets | list | `[]` |  |
-| istioRegistrySync.cloudMap.region | string | `""` |  |
-| istioRegistrySync.consul.endpoint | string | `""` |  |
-| istioRegistrySync.consul.namespace | string | `""` |  |
-| istioRegistrySync.consul.token | string | `""` |  |
-| istioRegistrySync.debug | bool | `false` |  |
-| istioRegistrySync.enable | bool | `true` |  |
-| istioRegistrySync.publishNamespace | string | `""` |  |
-| istioRegistrySync.resyncPeriod | int | `5` |  |
-| license | string | `""` |  |
+| image.registry | string | `"addon-containers.istio.tetratelabs.com"` |  |
+| image.tag | string | `"1.0.0-test1"` |  |
+| secrets.clusterServiceAccount.clusterFQN | string | `""` |  |
+| secrets.clusterServiceAccount.encodedJWK | string | `""` |  |
+| secrets.cveScannerServiceAccount.token | string | `""` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| spec.centralPlane.caCert | string | `""` |  |
+| spec.centralPlane.host | string | `"central"` |  |
+| spec.centralPlane.plaintext | bool | `true` |  |
+| spec.centralPlane.port | int | `9080` |  |
+| spec.components.configValidator.enabled | bool | `true` |  |
+| spec.components.configValidator.istioNamespace | string | `"istio-system"` |  |
+| spec.components.configValidator.schedule | string | `"@midnight"` |  |
+| spec.components.cveScanner.enabled | bool | `true` |  |
+| spec.components.cveScanner.schedule | string | `"@midnight"` |  |
+| spec.components.cveScanner.service.address | string | `"tis.tetrate.io:443/api"` |  |
+| spec.components.cveScanner.service.addressScheme | string | `"https"` |  |
+| spec.components.serviceDiscoverer.enabled | bool | `true` |  |
+| spec.components.serviceDiscoverer.schedule | string | `"@every 10s"` |  |
 
