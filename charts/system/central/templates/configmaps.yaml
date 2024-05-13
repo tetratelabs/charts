@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: tis-central-plane
+  name: tis-central-plane-iam-jwt
+  namespace: {{ .Release.Namespace }}
+data:
+  iam.key: {{ randAlphaNum 32 | b64enc | quote }}
+  config.yaml: |
+    jwt:
+      expiration: {{ trimSuffix "s" .Values.user.jwt.expiration | quote }}
+      issuers:
+        - name: https://issuer.tetrate.io
+          algorithm: HS256
+          signingkeypath: "/etc/central/iam/jwt/iam.key"
+
+---
+
+{{- if .Values.user.ldap.enable -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  lables:
+    app: tis-central-plane
+  name: tis-central-plane-ldap
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yaml: |
+  {{ toYaml .Values.user.ldap.config | indent 4 }}
+{{ end }}

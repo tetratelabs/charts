@@ -1,36 +1,39 @@
-# Istio Registry Sync configuration. https://docs.tetrate.io/istio-subscription/add-ons/registry-sync/introduction.
-istioRegistrySync:
-  # Set this flag to "true" to enable Istio Registry Sync.
-  enable: true
-  # Set this flag to "true" to enable debug mode.
-  debug: false
-  # The interval in seconds between syncing processes.
-  resyncPeriod: 5
-  # The Istio Registry Sync publishes the ServiceEntry into either the namespace where it is deployed or this namespace.
-  publishNamespace: ""
-  # [Consul](https://www.consul.io/) registry configuration. https://docs.tetrate.io/istio-subscription/add-ons/registry-sync/registries/consul.
-  consul:
-    # Consul's endpoint used to query service catalog.
-    endpoint: ""
-    # Consul's token used to query service catalog.
+secrets:
+  clusterServiceAccount:
+    clusterFQN: ""
+    encodedJWK: ""
+  cveScannerServiceAccount:
     token: ""
-    # Consul's namespace used to query service catalog.
-    namespace: ""
-  # [AWS Cloud Map](https://aws.amazon.com/cloud-map/) registry configuration. https://docs.tetrate.io/istio-subscription/add-ons/registry-sync/registries/cloud-map
-  cloudMap:
-    # The AWS region to use for connecting to Cloud Map.
-    region: ""
+spec:
+  components:
+    cveScanner:
+      enabled: true
+      schedule: "@midnight"
+      service:
+        address: "tis.tetrate.io:443/api"
+        addressScheme: "https"
+    serviceDiscoverer:
+      enabled: true
+      schedule: "@every 10s"
+    configValidator:
+      enabled: true
+      schedule: "@midnight"
+      istioNamespace: "istio-system"
+  centralPlane:
+    host: "central"
+    port: 9080
+    plaintext: true
+    caCert: ""
 image:
-  name: gcr.io/tetratelabs/tis/agent:v0.0.3@sha256:7118f8b0634c6313e7dfb20804d3c03ff0651eed28085a4f8c3393969808d66d
+  registry: addon-containers.istio.tetratelabs.com
+  name: agent
+  tag: 1.0.0-test1
   pullPolicy: IfNotPresent
   pullSecrets: []
-# Content of the license file.
-license: ""
-# Service account to be used.
 serviceAccount:
   # Set this flag to "true" to create a service account.
   create: true
-  # Set the name of the service account.
+  # Set the name of the service account to use.
   name: ""
   # Example of how to associate AWS IAM role with ServiceAccount for AWS Cloud Map integration
   # https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html

@@ -20,7 +20,10 @@ spec:
         {{- include "agent.labels" . | nindent 8 }}
       annotations:
         prometheus.io/scrape: "true"
+        prometheus.io/port: "9091"
+        prometheus.io/path: "/metrics"
     spec:
+      # TODO(dio): Add readiness and liveness probes.
       terminationGracePeriodSeconds: 30
       serviceAccountName: {{ include "agent.serviceAccountName" . }}
       {{- with .Values.image.pullSecrets }}
@@ -29,22 +32,52 @@ spec:
       {{- end }}
       containers:
         - name: {{ include "agent.fullname" . }}
-          image: {{ .Values.image.name }}
+          image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             readOnlyRootFilesystem: true
+          # TODO(dio): Monitoring and admin ports.
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: {{ include "agent.fullname" . }}
+          args:
+            - --cluster-fqn={{ .Values.secrets.clusterServiceAccount.clusterFQN }}
+            - --central-encoded-jwk=env://CLUSTER_SERVICE_ACCOUNT_ENCODED_JWK
+            - --central-address={{ .Values.spec.centralPlane.host }}:{{ .Values.spec.centralPlane.port }}
+            - --central-ca-cert=env://CENTRAL_PLANE_CA_CERT
+            {{- if .Values.spec.centralPlane.plaintext }}
+            - --central-plaintext
+            {{- end }}
+            {{- if .Values.spec.components.cveScanner.enabled }}
+            - --cve-scanner-enabled
+            - --cve-scanner-service-token=env://CVE_SCANNER_SERVICE_ACCOUNT_TOKEN
+            - --cve-scanner-service-address={{ .Values.spec.components.cveScanner.service.address }}
+            - --cve-scanner-service-address-scheme={{ .Values.spec.components.cveScanner.service.addressScheme }}
+            - --cve-scanner-schedule={{ .Values.spec.components.cveScanner.schedule }}
+            {{- end }}
+            {{- if .Values.spec.components.serviceDiscoverer.enabled }}
+            - --service-discoverer-enabled
+            - --service-discoverer-schedule={{ .Values.spec.components.serviceDiscoverer.schedule }}
+            {{- end }}
+            {{- if .Values.spec.components.configValidator.enabled }}
+            - --config-analyzer-enabled
+            - --config-analyzer-schedule={{ .Values.spec.components.configValidator.schedule }}
+            - --config-analyzer-istio-namespace={{ .Values.spec.components.configValidator.istioNamespace }}
+            {{- end }}
           ports:
-            - name: http
-              containerPort: 3000
-              protocol: TCP
-              hostPort: 3000
-          volumeMounts:
-            - mountPath: /var/tis-agent
-              name: license
-      volumes:
-        - secret:
-            secretName: {{ include "agent.fullname" . }}
-          name: license
+            - name: admin
+              containerPort: 9091
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: admin
+            failureThreshold: 3
+            periodSeconds: 15
+            terminationGracePeriodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: admin
+            failureThreshold: 3
+            periodSeconds: 15
+            initialDelaySeconds: 1

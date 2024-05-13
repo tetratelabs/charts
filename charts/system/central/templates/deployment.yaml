@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tis-central-plane
+  namespace: {{.Release.Namespace}}
+  labels:
+    app: tis-central-plane
+    platform.tis.tetrate.io/application: tis-central-plane
+    platform.tis.tetrate.io/component: central
+spec:
+  replicas: 1  # for now, the central plane can only deploy as single instance
+  selector:
+    matchLabels:
+      name: tis-central-plane
+  template:
+    metadata:
+      labels:
+        name: tis-central-plane
+        app: tis-central-plane
+    spec:
+      serviceAccountName: tis-central-plane
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: central
+          image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - "--iam-local-user-credentials-path"
+            - "/etc/central/iam/credentials"
+            - "--iam-config-file"
+            - "/etc/central/iam/jwt/config.yaml"
+            - "--grpc-port"
+            - "{{ .Values.service.grpc.port }}"
+            - "--http-port"
+            - "{{ .Values.service.http.port }}"
+            - "--http-deployment-path"
+            - "{{ .Values.service.http.deploymentPath }}"
+            {{- if .Values.persistent.enable }}
+            - "--persistent-enable"
+            - "--persistent-key-prefix"
+            - "{{ .Values.persistent.keyPrefix }}"
+            - "--persistent-namespace"
+            - "{{ .Release.Namespace }}"
+            - "--persistent-per-value-size"
+            - "{{ .Values.persistent.valueSize }}"
+            - "--persistent-flush-duration"
+            - "{{ .Values.persistent.flushInterval }}"
+            {{- end }}
+            - "--cve-expire-cron"
+            - "{{ .Values.service.cve.cron }}"
+            - "--cve-expire-keep-days"
+            - "{{ .Values.service.cve.keepDays }}"
+            {{- if .Values.service.cve.token }}
+            - "--cve-token-filepath"
+            - "/etc/central/cve/token"
+            {{- end }}
+          env:
+            - name: POD_NAMESPACE
+              value: "{{ .Release.Namespace }}"
+          volumeMounts:
+            - mountPath: /etc/central/iam/credentials
+              name: iam-admin-credentials
+              readOnly: true
+            - mountPath: /etc/central/iam/jwt
+              name: iam-jwt-config
+              readOnly: true
+            {{- if .Values.user.ldap.enable }}
+            - mountPath: /etc/central/ldap/credentials
+              name: tis-ldap-credentials
+              readOnly: true
+            - mountPath: /etc/central/ldap/config
+              name: tis-ldap-config
+              readOnly: true
+            {{- end }}
+            {{- if .Values.service.cve.token }}
+            - mountPath: /etc/central/cve
+              name: tis-cve-token
+              readOnly: true
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.http.port }}
+              protocol: TCP
+            - name: grpc
+              containerPort: {{ .Values.service.grpc.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 3
+            periodSeconds: 15
+            terminationGracePeriodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 3
+            periodSeconds: 15
+            initialDelaySeconds: 1
+      volumes:
+        - name: iam-admin-credentials
+          secret:
+            secretName: tis-admin-credentials
+        - name: iam-jwt-config
+          configMap:
+            name: tis-central-plane-iam-jwt
+        {{- if .Values.user.ldap.enable }}
+        - name: tis-ldap-credentials
+          secret:
+            secretName: tis-ldap-credentials
+        - name: tis-ldap-config
+          configMap:
+            name: tis-central-plane-ldap
+        {{- end }}
+        {{- if .Values.service.cve.token }}
+        - name: tis-cve-token
+          secret:
+            secretName: tis-cve-token
+        {{- end }}
