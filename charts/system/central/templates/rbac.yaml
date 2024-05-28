@@ -11,7 +11,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: tis-central-plane
+  name: tis-central-plane-{{ .Release.Namespace }}
   labels:
     app: tis-central-plane
     platform.tis.tetrate.io/application: tis-central-plane
@@ -19,7 +19,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: tis-central-plane
+  name: tis-central-plane-{{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: tis-central-plane
@@ -30,7 +30,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: tis-central-plane
+  name: tis-central-plane-{{ .Release.Namespace }}
   labels:
     app: tis-central-plane
     platform.tis.tetrate.io/application: tis-central-plane
@@ -41,4 +41,7 @@ rules:
     verbs: ["get", "create", "update"]
   - apiGroups: [ "" ]
     resources: [ "services" ]
-    verbs: [ "get" ]
+    verbs: [ "get", "watch", "list" ]
+  - apiGroups: [ "cert-manager.io" ]
+    resources: [ "issuers", "certificates", "clusterissuers" ]
+    verbs: ["*"]

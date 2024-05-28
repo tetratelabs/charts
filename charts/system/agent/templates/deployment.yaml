@@ -81,3 +81,9 @@ spec:
             failureThreshold: 3
             periodSeconds: 15
             initialDelaySeconds: 1
+          volumeMounts:
+            - mountPath: /tmp
+              name: temp-volume
+      volumes:
+        - name: temp-volume
+          emptyDir: {}
