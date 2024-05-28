@@ -1,0 +1,45 @@
+{{- define "generate-tls-certs" -}}
+{{- end }}
+
+{{- if and .ca.UseGenerateCert .Values.service.tls.enable }}
+
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: central-plane-issuer
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- if .ca.SelfSign }}
+  selfSigned: {}
+  {{- else }}
+  ca:
+    secretName: central-plane-cert-define
+  {{- end }}
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .ca.CertificateName }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  isCA: true
+  secretName: {{ .ca.SecretName }}
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: Central-Plane-Cert-Issuer-CA
+  issuerRef:
+    name: central-plane-issuer
+    kind: Issuer
+    group: cert-manager.io
+  {{- if and .ca.DNSNames (gt (len .ca.DNSNames) 0) }}
+  dnsNames:
+    {{- range .ca.DNSNames }}
+    - "{{ . }}"
+    {{- end }}
+
+{{- end }}
+
+{{- end }}

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tis-central-plane-lb
+  namespace: {{ .Release.Namespace }}
   labels:
     app: tis-central-plane
 spec:
@@ -24,6 +25,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tis-central-plane
+  namespace: {{ .Release.Namespace }}
   labels:
     app: tis-central-plane
 spec:

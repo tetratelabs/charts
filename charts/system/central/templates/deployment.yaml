@@ -38,6 +38,17 @@ spec:
             - "{{ .Values.service.http.port }}"
             - "--http-deployment-path"
             - "{{ .Values.service.http.deploymentPath }}"
+            {{- if .Values.service.tls.enable }}
+            - "--tls-enabled"
+            - "--tls-path"
+            - "/etc/central/tls"
+            - "--tls-certificate-resource-name"
+            - "{{ .ca.CertificateName }}"
+            - "--tls-monitor-service-name"
+            - "tis-central-plane-lb"
+            - "--tls-monitor-service-namespace"
+            - "{{ .Release.Namespace }}"
+            {{- end }}
             {{- if .Values.persistent.enable }}
             - "--persistent-enable"
             - "--persistent-key-prefix"
@@ -53,6 +64,14 @@ spec:
             - "{{ .Values.service.cve.cron }}"
             - "--cve-expire-keep-days"
             - "{{ .Values.service.cve.keepDays }}"
+            - "--config-validator-expire-cron"
+            - "{{ .Values.service.config_validation.cron }}"
+            - "--config-validator-expire-keep-days"
+            - "{{ .Values.service.config_validation.keepDays }}"
+            - "--cluster-status-detect-cron"
+            - "{{ .Values.service.cluster_status_detector.cron }}"
+            - "--cluster-status-detect-connection-lost-duration"
+            - "{{ .Values.service.cluster_status_detector.lost_connection_duration }}"
             {{- if .Values.service.cve.token }}
             - "--cve-token-filepath"
             - "/etc/central/cve/token"
@@ -80,6 +99,11 @@ spec:
               name: tis-cve-token
               readOnly: true
             {{- end }}
+            {{- if .Values.service.tls.enable }}
+            - mountPath: /etc/central/tls
+              name: tis-tls-config
+              readOnly: false
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.http.port }}
@@ -89,6 +113,7 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
+              scheme: {{ if .Values.service.tls.enable }}HTTPS{{else}}HTTP{{end}}
               path: /
               port: http
             failureThreshold: 3
@@ -96,6 +121,7 @@ spec:
             terminationGracePeriodSeconds: 15
           readinessProbe:
             httpGet:
+              scheme: {{ if .Values.service.tls.enable }}HTTPS{{else}}HTTP{{end}}
               path: /
               port: http
             failureThreshold: 3
@@ -120,4 +146,9 @@ spec:
         - name: tis-cve-token
           secret:
             secretName: tis-cve-token
+        {{- end }}
+        {{- if .Values.service.tls.enable }}
+        - name: tis-tls-config
+          secret:
+            secretName: {{ .ca.SecretName }}
         {{- end }}

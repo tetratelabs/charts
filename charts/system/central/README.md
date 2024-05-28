@@ -1,6 +1,6 @@
 # central
 
-![Version: 1.0.0-test1](https://img.shields.io/badge/Version-1.0.0--test1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0-test1](https://img.shields.io/badge/AppVersion-1.0.0--test1-informational?style=flat-square)
+![Version: 1.0.0-rc4](https://img.shields.io/badge/Version-1.0.0--rc4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0-rc4](https://img.shields.io/badge/AppVersion-1.0.0--rc4-informational?style=flat-square)
 
 Helm Chart for tis central plane
 
@@ -12,18 +12,27 @@ Helm Chart for tis central plane
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"addon-containers.istio.tetratelabs.com"` |  |
-| image.tag | string | `"1.0.0-test1"` |  |
-| ingress.enabled | bool | `false` |  |
+| image.tag | string | `"1.0.0-rc4"` |  |
 | persistent.enable | bool | `true` |  |
 | persistent.flushInterval | string | `"10s"` |  |
 | persistent.keyPrefix | string | `"central-storage-"` |  |
 | persistent.valueSize | int | `1024` |  |
+| service.cluster_status_detector.cron | string | `"@every 1m"` |  |
+| service.cluster_status_detector.lost_connection_duration | string | `"2m"` |  |
+| service.config_validation.cron | string | `"@midnight"` |  |
+| service.config_validation.keepDays | int | `30` |  |
 | service.cve.cron | string | `"@midnight"` |  |
 | service.cve.keepDays | int | `30` |  |
 | service.cve.token | string | `""` |  |
 | service.grpc.port | int | `9080` |  |
 | service.http.deploymentPath | string | `""` |  |
 | service.http.port | int | `8080` |  |
+| service.tls.enable | bool | `false` |  |
+| service.tls.generated.cert | string | `""` |  |
+| service.tls.generated.extraDnsNames | list | `[]` |  |
+| service.tls.generated.key | string | `""` |  |
+| service.tls.secretName | string | `""` |  |
+| service.tls.useGeneratedCerts | bool | `true` |  |
 | user.admin.password | string | `"admin"` |  |
 | user.admin.username | string | `"admin"` |  |
 | user.jwt.expiration | string | `"3600s"` |  |

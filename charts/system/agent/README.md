@@ -1,6 +1,6 @@
 # agent
 
-![Version: 1.0.0-test1](https://img.shields.io/badge/Version-1.0.0--test1-informational?style=flat-square) ![AppVersion: 1.0.0-test1](https://img.shields.io/badge/AppVersion-1.0.0--test1-informational?style=flat-square)
+![Version: 1.0.0-rc4](https://img.shields.io/badge/Version-1.0.0--rc4-informational?style=flat-square) ![AppVersion: 1.0.0-rc4](https://img.shields.io/badge/AppVersion-1.0.0--rc4-informational?style=flat-square)
 
 Helm chart for deploying TIS Agent
 
@@ -12,7 +12,7 @@ Helm chart for deploying TIS Agent
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"addon-containers.istio.tetratelabs.com"` |  |
-| image.tag | string | `"1.0.0-test1"` |  |
+| image.tag | string | `"1.0.0-rc4"` |  |
 | secrets.clusterServiceAccount.clusterFQN | string | `""` |  |
 | secrets.clusterServiceAccount.encodedJWK | string | `""` |  |
 | secrets.cveScannerServiceAccount.token | string | `""` |  |

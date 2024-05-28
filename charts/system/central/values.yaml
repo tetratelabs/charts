@@ -1,7 +1,7 @@
 image:
   registry: addon-containers.istio.tetratelabs.com
   name: central
-  tag: 1.0.0-test1
+  tag: 1.0.0-rc4
   pullPolicy: IfNotPresent
   pullSecrets: []
 user:
@@ -38,6 +38,15 @@ persistent:
   valueSize: 1024
   flushInterval: 10s
 service:
+  tls:
+    enable: false
+    useGeneratedCerts: true # Toggle between using generated certs and pre-existing TLS secret
+    secretName: "" # Name of the pre-existing Kubernetes TLS secret
+    generated: # Generated cert options, here user need to specify CA cert and key
+      cert: ""
+      key: ""
+      extraDnsNames: []
+      #  - "central.tis.com"
   http:
     port: 8080
     deploymentPath: ""
@@ -47,19 +56,11 @@ service:
     keepDays: 30
     cron: "@midnight"
     token: ""
-ingress:
-  # Please update the enable status and the configuration below to enable Ingress
-  enabled: false
-  #  className: ""
-  #  annotations: {}
-  #  hosts:
-  #    - host: central.tis.com
-  #      paths:
-  #        - path: /
-  #          pathType: ImplementationSpecific
-  #  tls: []
-  ##    - secretName: chart-example-tls
-  ##      hosts:
-  ##        - chart-example.local
+  config_validation:
+    keepDays: 30
+    cron: "@midnight"
+  cluster_status_detector:
+    cron: "@every 1m"
+    lost_connection_duration: "2m"
 
 ---
