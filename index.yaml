@@ -15,6 +15,17 @@ entries:
   - annotations:
       tetrate.io/system: "true"
     apiVersion: v2
+    appVersion: 1.0.0-rc4
+    created: "2024-05-28T02:35:36.172859472Z"
+    description: Helm chart for deploying TIS Agent
+    digest: 8b9671f5fc9b9a7c902aaa1582d3d53e3b47cb52fd243ec8c1e650f8edb454a8
+    name: agent
+    urls:
+    - https://archives.tetrate.io/agent-1.0.0-rc4/agent-1.0.0-rc4.tgz
+    version: 1.0.0-rc4
+  - annotations:
+      tetrate.io/system: "true"
+    apiVersion: v2
     appVersion: 0.0.3
     created: "2023-12-19T09:35:18.424474268Z"
     description: Helm chart for deploying TIS Agent
@@ -26,14 +37,14 @@ entries:
   - annotations:
       tetrate.io/system: "true"
     apiVersion: v2
-    appVersion: 1.0.0-rc4
-    created: "2024-05-28T02:35:36.172859472Z"
+    appVersion: 1.0.0-rc5
+    created: "2024-05-29T07:17:22.708606689Z"
     description: Helm chart for deploying TIS Agent
-    digest: 8b9671f5fc9b9a7c902aaa1582d3d53e3b47cb52fd243ec8c1e650f8edb454a8
+    digest: a51500155102b66495bec700e3b1464b11cab6fc022c81b61590ae4a0bbb4009
     name: agent
     urls:
-    - https://archives.tetrate.io/agent-1.0.0-rc4/agent-1.0.0-rc4.tgz
-    version: 1.0.0-rc4
+    - https://archives.tetrate.io/agent-1.0.0-rc5/agent-1.0.0-rc5.tgz
+    version: 1.0.0-rc5
   base:
   - apiVersion: v1
     appVersion: 1.22.0-tetrate0
@@ -1330,6 +1341,16 @@ entries:
     urls:
     - https://archives.tetrate.io/central-1.0.0-rc4/central-1.0.0-rc4.tgz
     version: 1.0.0-rc4
+  - apiVersion: v2
+    appVersion: 1.0.0-rc5
+    created: "2024-05-29T07:17:22.932606626Z"
+    description: Helm Chart for tis central plane
+    digest: dec34bde399a2e1570b032663d93cefc7cc238a8980705a6a07d2ba08026650a
+    name: central
+    type: application
+    urls:
+    - https://archives.tetrate.io/central-1.0.0-rc5/central-1.0.0-rc5.tgz
+    version: 1.0.0-rc5
   cni:
   - apiVersion: v1
     appVersion: 1.22.0-tetrate0
