@@ -1,7 +1,7 @@
 image:
   registry: addon-containers.istio.tetratelabs.com
   name: central
-  tag: 1.0.0-test2
+  tag: 1.0.0-rc6
   pullPolicy: IfNotPresent
   pullSecrets: []
 user:
@@ -35,7 +35,7 @@ user:
 persistent:
   enable: true
   keyPrefix: central-storage-
-  valueSize: 1024
+  valueSize: 512
   flushInterval: 10s
 service:
   tls:

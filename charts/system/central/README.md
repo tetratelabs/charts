@@ -1,6 +1,6 @@
 # central
 
-![Version: 1.0.0-test2](https://img.shields.io/badge/Version-1.0.0--test2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0-test2](https://img.shields.io/badge/AppVersion-1.0.0--test2-informational?style=flat-square)
+![Version: 1.0.0-rc6](https://img.shields.io/badge/Version-1.0.0--rc6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0-rc6](https://img.shields.io/badge/AppVersion-1.0.0--rc6-informational?style=flat-square)
 
 Helm Chart for tis central plane
 
@@ -12,11 +12,11 @@ Helm Chart for tis central plane
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"addon-containers.istio.tetratelabs.com"` |  |
-| image.tag | string | `"1.0.0-test2"` |  |
+| image.tag | string | `"1.0.0-rc6"` |  |
 | persistent.enable | bool | `true` |  |
 | persistent.flushInterval | string | `"10s"` |  |
 | persistent.keyPrefix | string | `"central-storage-"` |  |
-| persistent.valueSize | int | `1024` |  |
+| persistent.valueSize | int | `512` |  |
 | service.cluster_status_detector.cron | string | `"@every 1m"` |  |
 | service.cluster_status_detector.lost_connection_duration | string | `"2m"` |  |
 | service.config_validation.cron | string | `"@midnight"` |  |
