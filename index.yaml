@@ -475,6 +475,20 @@ entries:
     - https://archives.tetrate.io/base-1.20.3+tetrate3/base-1.20.3+tetrate3.tgz
     version: 1.20.30003
   - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for deploying Istio cluster resources and CRDs
+    digest: c9229bcefcbb72b21c58fa9afc49762a5716657c07758656768cdb4adffd6ae1
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    name: base
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/base-1.20.8+tetrate0/base-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
+  - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
     description: Helm chart for deploying Istio cluster resources and CRDs
@@ -1525,10 +1539,10 @@ entries:
     - https://archives.tetrate.io/base-1.16.6+tetrate0/base-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:56.810746045Z"
     description: Helm chart for deploying Istio cluster resources and CRDs
-    digest: c9229bcefcbb72b21c58fa9afc49762a5716657c07758656768cdb4adffd6ae1
+    digest: f5e2230041540f7740747d25a172a96ccc6e44e579516c4a16fa018bd0d767e2
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -1536,8 +1550,22 @@ entries:
     sources:
     - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/base-1.20.8+tetrate0/base-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/base-1.22.2+tetrate1/base-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:56.810746045Z"
+    description: Helm chart for deploying Istio cluster resources and CRDs
+    digest: f5e2230041540f7740747d25a172a96ccc6e44e579516c4a16fa018bd0d767e2
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    name: base
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/base-1.22.2+tetrate1/base-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   central:
   - apiVersion: v2
     appVersion: 1.0.0-test2
@@ -2025,6 +2053,21 @@ entries:
     urls:
     - https://archives.tetrate.io/cni-1.20.3+tetrate3/cni-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for istio-cni components
+    digest: d4c9f939c5434a836d5c053396c0130c850790eadd39f5c9958fce5464e8b532
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio-cni
+    - istio
+    name: cni
+    sources:
+    - https://github.com/istio/istio/tree/release-1.20/cni
+    urls:
+    - https://archives.tetrate.io/cni-1.20.8+tetrate0/cni-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -3151,20 +3194,35 @@ entries:
     - https://archives.tetrate.io/cni-1.16.6+tetrate0/cni-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.282742908Z"
     description: Helm chart for istio-cni components
-    digest: d4c9f939c5434a836d5c053396c0130c850790eadd39f5c9958fce5464e8b532
+    digest: 4bcf8df224a59a2ae4afb2edc83be449085eb6554db70a704f15b8e2d87844e3
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio-cni
     - istio
     name: cni
     sources:
-    - https://github.com/istio/istio/tree/release-1.20/cni
+    - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/cni-1.20.8+tetrate0/cni-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/cni-1.22.2+tetrate1/cni-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.282742908Z"
+    description: Helm chart for istio-cni components
+    digest: 4bcf8df224a59a2ae4afb2edc83be449085eb6554db70a704f15b8e2d87844e3
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio-cni
+    - istio
+    name: cni
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/cni-1.22.2+tetrate1/cni-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   gateway:
   - apiVersion: v2
     appVersion: 1.22.2-tetrate0
@@ -3630,6 +3688,22 @@ entries:
     urls:
     - https://archives.tetrate.io/gateway-1.20.3+tetrate3/gateway-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v2
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for deploying Istio gateways
+    digest: 7d4622eb889c7e4e0fb3e63f14ceb78abfb0c2bc0259db10424f48d0a868e5ee
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - gateways
+    name: gateway
+    sources:
+    - https://github.com/istio/istio
+    type: application
+    urls:
+    - https://archives.tetrate.io/gateway-1.20.8+tetrate0/gateway-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v2
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -4831,10 +4905,10 @@ entries:
     - https://archives.tetrate.io/gateway-1.16.6+tetrate0/gateway-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v2
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.122743971Z"
     description: Helm chart for deploying Istio gateways
-    digest: 7d4622eb889c7e4e0fb3e63f14ceb78abfb0c2bc0259db10424f48d0a868e5ee
+    digest: 5556f899d95ccd559eaa0d5da927ed6ccc02e8292be45cf2c19a16a50424eb72
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -4844,8 +4918,24 @@ entries:
     - https://github.com/istio/istio
     type: application
     urls:
-    - https://archives.tetrate.io/gateway-1.20.8+tetrate0/gateway-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/gateway-1.22.2+tetrate1/gateway-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v2
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.122743971Z"
+    description: Helm chart for deploying Istio gateways
+    digest: 5556f899d95ccd559eaa0d5da927ed6ccc02e8292be45cf2c19a16a50424eb72
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - gateways
+    name: gateway
+    sources:
+    - https://github.com/istio/istio
+    type: application
+    urls:
+    - https://archives.tetrate.io/gateway-1.22.2+tetrate1/gateway-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   istio-default:
   - apiVersion: v1
     appVersion: 1.22.2-tetrate0
@@ -5253,6 +5343,20 @@ entries:
     urls:
     - https://archives.tetrate.io/istio-default-1.20.3+tetrate3/istio-default-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for istio default revision components.
+    digest: 55aa5e92c4f4bac6afac01482646d90bdf9b064dcf1b82215d0380c547fe2cfc
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    name: istio-default
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istio-default-1.20.8+tetrate0/istio-default-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -6304,10 +6408,10 @@ entries:
     - https://archives.tetrate.io/istio-default-1.16.6+tetrate0/istio-default-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:56.966745008Z"
     description: Helm chart for istio default revision components.
-    digest: 55aa5e92c4f4bac6afac01482646d90bdf9b064dcf1b82215d0380c547fe2cfc
+    digest: f26e264535675fecadf7e1e90a9450463b3dcd7124926ed83575a7d45879f340
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -6315,8 +6419,22 @@ entries:
     sources:
     - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/istio-default-1.20.8+tetrate0/istio-default-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/istio-default-1.22.2+tetrate1/istio-default-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:56.966745008Z"
+    description: Helm chart for istio default revision components.
+    digest: f26e264535675fecadf7e1e90a9450463b3dcd7124926ed83575a7d45879f340
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    name: istio-default
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istio-default-1.22.2+tetrate1/istio-default-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   istio-egress:
   - apiVersion: v1
     appVersion: 1.22.2-tetrate0
@@ -6782,6 +6900,22 @@ entries:
     urls:
     - https://archives.tetrate.io/istio-egress-1.20.3+tetrate3/istio-egress-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for deploying Istio gateways
+    digest: 80187452584746c5f5a36ad4aba5fee0cbfd5fece718c19306ad6bc7c914b41e
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - egressgateway
+    - gateways
+    name: istio-egress
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istio-egress-1.20.8+tetrate0/istio-egress-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -7983,10 +8117,10 @@ entries:
     - https://archives.tetrate.io/istio-egress-1.16.6+tetrate0/istio-egress-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:34:00.058324844Z"
     description: Helm chart for deploying Istio gateways
-    digest: 80187452584746c5f5a36ad4aba5fee0cbfd5fece718c19306ad6bc7c914b41e
+    digest: 274084a80129c82c619ff18dc7bde4761eb82a980570254666d4ffab4c9712a5
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -7996,8 +8130,24 @@ entries:
     sources:
     - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/istio-egress-1.20.8+tetrate0/istio-egress-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/istio-egress-1.22.2+tetrate1/istio-egress-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:34:00.058324844Z"
+    description: Helm chart for deploying Istio gateways
+    digest: 274084a80129c82c619ff18dc7bde4761eb82a980570254666d4ffab4c9712a5
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - egressgateway
+    - gateways
+    name: istio-egress
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istio-egress-1.22.2+tetrate1/istio-egress-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   istio-ingress:
   - apiVersion: v1
     appVersion: 1.22.2-tetrate0
@@ -8463,6 +8613,22 @@ entries:
     urls:
     - https://archives.tetrate.io/istio-ingress-1.20.3+tetrate3/istio-ingress-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for deploying Istio gateways
+    digest: ef2c111de3c5b8094af440d0e784582018a4ebac32b46fbb6c64f096ac5dad3b
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - ingressgateway
+    - gateways
+    name: istio-ingress
+    sources:
+    - http://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istio-ingress-1.20.8+tetrate0/istio-ingress-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -9664,10 +9830,10 @@ entries:
     - https://archives.tetrate.io/istio-ingress-1.16.6+tetrate0/istio-ingress-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:34:00.218323781Z"
     description: Helm chart for deploying Istio gateways
-    digest: ef2c111de3c5b8094af440d0e784582018a4ebac32b46fbb6c64f096ac5dad3b
+    digest: c80e44927f996db571c3567e7c984ecdbafdf338b0213ff9cc5fd53c0667e6b8
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -9677,8 +9843,24 @@ entries:
     sources:
     - http://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/istio-ingress-1.20.8+tetrate0/istio-ingress-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/istio-ingress-1.22.2+tetrate1/istio-ingress-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:34:00.218323781Z"
+    description: Helm chart for deploying Istio gateways
+    digest: c80e44927f996db571c3567e7c984ecdbafdf338b0213ff9cc5fd53c0667e6b8
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - ingressgateway
+    - gateways
+    name: istio-ingress
+    sources:
+    - http://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istio-ingress-1.22.2+tetrate1/istio-ingress-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   istio-monitoring-demo:
   - annotations:
       tetrate.io/demo: "true"
@@ -10191,6 +10373,21 @@ entries:
     urls:
     - https://archives.tetrate.io/istio-operator-1.20.3+tetrate3/istio-operator-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for deploying Istio operator
+    digest: 35b5bbcd94e41ec7e995371b54c234d1d55a520457bcb9a5af1382f57e4c6bb2
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - operator
+    name: istio-operator
+    sources:
+    - https://github.com/istio/istio/tree/master/operator
+    urls:
+    - https://archives.tetrate.io/istio-operator-1.20.8+tetrate0/istio-operator-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -11317,10 +11514,10 @@ entries:
     - https://archives.tetrate.io/istio-operator-1.16.6+tetrate0/istio-operator-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.438741872Z"
     description: Helm chart for deploying Istio operator
-    digest: 35b5bbcd94e41ec7e995371b54c234d1d55a520457bcb9a5af1382f57e4c6bb2
+    digest: 42d6a4ace819ddaab76164c202355116d1f6fdf9367b3361277c7e82266a6620
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -11329,8 +11526,23 @@ entries:
     sources:
     - https://github.com/istio/istio/tree/master/operator
     urls:
-    - https://archives.tetrate.io/istio-operator-1.20.8+tetrate0/istio-operator-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/istio-operator-1.22.2+tetrate1/istio-operator-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.438741872Z"
+    description: Helm chart for deploying Istio operator
+    digest: 42d6a4ace819ddaab76164c202355116d1f6fdf9367b3361277c7e82266a6620
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - operator
+    name: istio-operator
+    sources:
+    - https://github.com/istio/istio/tree/master/operator
+    urls:
+    - https://archives.tetrate.io/istio-operator-1.22.2+tetrate1/istio-operator-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   istio-registry-sync:
   - annotations:
       tetrate.io/addon: "true"
@@ -11821,6 +12033,22 @@ entries:
     urls:
     - https://archives.tetrate.io/istiod-1.20.3+tetrate3/istiod-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for istio control plane
+    digest: e2359242ae99dd2b2208fa1225ec56c1009df7ea1357f411ac44d1fb0ba082ae
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - istiod
+    - istio-discovery
+    name: istiod
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istiod-1.20.8+tetrate0/istiod-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -13022,10 +13250,10 @@ entries:
     - https://archives.tetrate.io/istiod-1.16.6+tetrate0/istiod-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:34:00.382322691Z"
     description: Helm chart for istio control plane
-    digest: e2359242ae99dd2b2208fa1225ec56c1009df7ea1357f411ac44d1fb0ba082ae
+    digest: 6cc80789d272fb20461956ea6015c1986b433e69f3e25636edda837581ccf787
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -13035,8 +13263,24 @@ entries:
     sources:
     - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/istiod-1.20.8+tetrate0/istiod-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/istiod-1.22.2+tetrate1/istiod-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:34:00.382322691Z"
+    description: Helm chart for istio control plane
+    digest: 6cc80789d272fb20461956ea6015c1986b433e69f3e25636edda837581ccf787
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - istiod
+    - istio-discovery
+    name: istiod
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istiod-1.22.2+tetrate1/istiod-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   istiod-remote:
   - apiVersion: v1
     appVersion: 1.22.2-tetrate0
@@ -13473,6 +13717,21 @@ entries:
     urls:
     - https://archives.tetrate.io/istiod-remote-1.20.3+tetrate3/istiod-remote-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for a remote cluster using an external istio control plane
+    digest: 2ed2aac441a0a4c27d30fd89f6e0c1991d9a08d4a02a93c80b2614b4d7b04280
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - external-istiod
+    name: istiod-remote
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istiod-remote-1.20.8+tetrate0/istiod-remote-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -14599,10 +14858,10 @@ entries:
     - https://archives.tetrate.io/istiod-remote-1.16.6+tetrate0/istiod-remote-1.16.6+tetrate0.tgz
     version: 1.16.6+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.606740756Z"
     description: Helm chart for a remote cluster using an external istio control plane
-    digest: 2ed2aac441a0a4c27d30fd89f6e0c1991d9a08d4a02a93c80b2614b4d7b04280
+    digest: 451495beceed210eeb1de56d93b3586748eb2a87523c2d3ee5af910fe7683ed2
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio
@@ -14611,8 +14870,23 @@ entries:
     sources:
     - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/istiod-remote-1.20.8+tetrate0/istiod-remote-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/istiod-remote-1.22.2+tetrate1/istiod-remote-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.606740756Z"
+    description: Helm chart for a remote cluster using an external istio control plane
+    digest: 451495beceed210eeb1de56d93b3586748eb2a87523c2d3ee5af910fe7683ed2
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio
+    - external-istiod
+    name: istiod-remote
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/istiod-remote-1.22.2+tetrate1/istiod-remote-1.22.2+tetrate1.tgz
+    version: 1.22.20001
   ztunnel:
   - apiVersion: v1
     appVersion: 1.22.2-tetrate0
@@ -15049,6 +15323,21 @@ entries:
     urls:
     - https://archives.tetrate.io/ztunnel-1.20.3+tetrate3/ztunnel-1.20.3+tetrate3.tgz
     version: 1.20.30003
+  - apiVersion: v1
+    appVersion: 1.20.8-tetrate0
+    created: "2024-07-01T06:48:55Z"
+    description: Helm chart for istio ztunnel components
+    digest: fbd897a9f65ed1ee22429c7f1e548132423a149c7d815f03c0aa6268409ff7be
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio-ztunnel
+    - istio
+    name: ztunnel
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/ztunnel-1.20.8+tetrate0/ztunnel-1.20.8+tetrate0.tgz
+    version: 1.20.8+tetrate0
   - apiVersion: v1
     appVersion: 1.20.7-tetrate0
     created: "2024-06-04T21:47:07Z"
@@ -15980,10 +16269,10 @@ entries:
     - https://archives.tetrate.io/ztunnel-1.18.2+tetrate0/ztunnel-1.18.2+tetrate0.tgz
     version: 1.18.2+tetrate0
   - apiVersion: v1
-    appVersion: 1.20.8-tetrate0
-    created: "2024-07-01T06:48:55Z"
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.766739693Z"
     description: Helm chart for istio ztunnel components
-    digest: fbd897a9f65ed1ee22429c7f1e548132423a149c7d815f03c0aa6268409ff7be
+    digest: 7b76caf3cf7e238a295ef386bb4498119bb0a4e371ffeae691b479032ea74550
     icon: https://istio.io/latest/favicons/android-192x192.png
     keywords:
     - istio-ztunnel
@@ -15992,6 +16281,21 @@ entries:
     sources:
     - https://github.com/istio/istio
     urls:
-    - https://archives.tetrate.io/ztunnel-1.20.8+tetrate0/ztunnel-1.20.8+tetrate0.tgz
-    version: 1.20.8+tetrate0
+    - https://archives.tetrate.io/ztunnel-1.22.2+tetrate1/ztunnel-1.22.2+tetrate1.tgz
+    version: 1.22.2+tetrate1
+  - apiVersion: v1
+    appVersion: 1.22.2-tetrate1
+    created: "2024-07-02T21:32:57.766739693Z"
+    description: Helm chart for istio ztunnel components
+    digest: 7b76caf3cf7e238a295ef386bb4498119bb0a4e371ffeae691b479032ea74550
+    icon: https://istio.io/latest/favicons/android-192x192.png
+    keywords:
+    - istio-ztunnel
+    - istio
+    name: ztunnel
+    sources:
+    - https://github.com/istio/istio
+    urls:
+    - https://archives.tetrate.io/ztunnel-1.22.2+tetrate1/ztunnel-1.22.2+tetrate1.tgz
+    version: 1.22.20001
 generated: "2023-11-14T06:02:39.820435757Z"
