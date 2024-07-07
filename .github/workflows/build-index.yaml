@@ -42,7 +42,7 @@ jobs:
           curl -fSsL https://tetrateio.github.io/tis-releaser/install.sh | sudo TIS_RELEASER_INSTALL=/usr/local bash
           curl -fSsL -o cosign https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 && chmod +x cosign && sudo mv cosign /usr/local/bin/cosign
           curl -fsSL https://get.helm.sh/helm-v3.13.2-linux-amd64.tar.gz | sudo tar xz --strip-components=1 linux-amd64/helm -C /usr/local/bin
-          helm plugin install https://github.com/sigstore/helm-sigstore
+          helm plugin install https://github.com/sigstore/helm-sigstore --version v0.2.0
 
           # to satisfy tis-releaser
           gcloud config set compute/zone us-central1-a
