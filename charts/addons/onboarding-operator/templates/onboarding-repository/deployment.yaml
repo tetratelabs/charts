@@ -1,0 +1,98 @@
+{{- $image := .Values.image -}}
+{{- $component := .Values.repository -}}
+{{- $kubeSpec := $component.kubeSpec -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onboarding-repository
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: onboarding-repository
+    app.kubernetes.io/name: onboarding-repository
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  replicas: {{ $kubeSpec.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: onboarding-repository
+  strategy:
+{{ toYaml $kubeSpec.deployment.strategy | indent 4 }}
+  template:
+    metadata:
+      labels:
+        app: onboarding-repository
+        app.kubernetes.io/name: onboarding-repository
+        {{- include "onboarding.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: onboarding-repository
+      securityContext:
+{{ toYaml $kubeSpec.deployment.podSecurityContext | indent 8 }}
+      affinity:
+{{ toYaml $kubeSpec.deployment.affinity | indent 8 }}
+      volumes:
+      # volume to copy DEB/RPM packages out of the `onboarding-package-istio-sidecar` image to
+      - name: istio-sidecar-default
+        emptyDir: {}
+{{- if .Values.istio.revisions }}
+      - name: istio-sidecar-revisions
+        emptyDir: {}
+{{- end }}
+      initContainers:
+      # copy DEB/RPM packages out of the `onboarding-package-istio-sidecar` image onto a shared volume
+      - name: istio-sidecar-default
+        image: {{ $image.repository }}/onboarding-package-istio-sidecar:{{ $component.onboardingPackageIstioSidecar.tag }}
+        command:
+        - cp
+        - -rpTv
+        - /srv/install
+        - /onboarding/repo/istio-sidecar/.default
+        volumeMounts:
+        - name: istio-sidecar-default
+          mountPath: /onboarding/repo/istio-sidecar
+{{- range $index, $revision := .Values.istio.revisions }}
+      # copy DEB/RPM packages out of the `onboarding-package-istio-sidecar` image onto a shared volume
+      - name: is-rev-{{ $revision.name }}
+        image: {{ $image.repository }}/onboarding-package-istio-sidecar:{{ $revision.version }}
+        command:
+        - cp
+        - -rpTv
+        - /srv/install
+        - /onboarding/repo/istio-sidecar/{{ $revision.name }}
+        volumeMounts:
+        - name: istio-sidecar-revisions
+          mountPath: /onboarding/repo/istio-sidecar
+{{- end }}
+      containers:
+      - name: onboarding-repository
+        image: {{ $image.repository }}/onboarding-repository-server:{{ $image.tag }}
+        imagePullPolicy: {{ $image.pullPolicy }}
+        volumeMounts:
+        - name: istio-sidecar-default
+          mountPath: /.srv/install/istio-sidecar
+{{- if .Values.istio.revisions }}
+        - name: istio-sidecar-revisions
+          mountPath: /srv/install/istio-sidecar
+{{- end }}
+        securityContext:
+{{ toYaml $kubeSpec.deployment.containerSecurityContext | indent 10 }}
+        resources:
+{{ toYaml $kubeSpec.deployment.resources | indent 10 }}
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 9082
+          timeoutSeconds: 1
+        name: onboarding-repository
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 9082
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1

@@ -1,0 +1,22 @@
+
+{{- $component := .Values.gateway -}}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: {{ $component.name }}-onboarding-plane
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  gateways:
+  - {{ .Release.Namespace }}/{{ $component.name }}
+  hosts:
+  - {{ .Values.onboarding.endpoint.host }}
+  tcp:
+  - match:
+    - port: 15443
+    route:
+    - destination:
+        host: onboarding-plane.{{ .Release.Namespace }}.svc.cluster.local
+        port:
+          number: 8443

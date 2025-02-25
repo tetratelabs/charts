@@ -1,0 +1,76 @@
+{{- $image := .Values.image -}}
+{{- $component := .Values.operator -}}
+{{- $kubeSpec := $component.kubeSpec -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onboarding-operator
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: onboarding-operator
+    app.kubernetes.io/name: onboarding-operator
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  replicas: {{ $kubeSpec.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: onboarding-operator
+  template:
+    metadata:
+      labels:
+        app: onboarding-operator
+        app.kubernetes.io/name: onboarding-operator
+        {{- include "onboarding.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: onboarding-operator
+      affinity:
+{{ toYaml $kubeSpec.deployment.affinity | indent 8 }}
+      securityContext:
+{{ toYaml $kubeSpec.deployment.podSecurityContext | indent 8 }}
+
+      containers:
+      - name: onboarding-operator
+        image: {{ $image.repository }}/onboarding-operator-server:{{ $image.tag }}
+        imagePullPolicy: {{ $image.pullPolicy }}
+        args:
+        - --log-output-level
+        - {{ $component.logLevel }}
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: ONBOARDING_GATEWAY
+          value: {{ .Values.gateway.name }}.{{ .Release.Namespace }}.svc.cluster.local
+        securityContext:
+{{ toYaml $kubeSpec.deployment.containerSecurityContext | indent 10 }}
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+        resources:
+{{ toYaml $kubeSpec.deployment.resources | indent 10 }}
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 9082
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 9082
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+      volumes:
+      - emptyDir: {}
+        name: tmp

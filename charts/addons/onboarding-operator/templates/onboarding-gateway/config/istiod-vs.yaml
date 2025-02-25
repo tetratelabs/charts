@@ -1,0 +1,32 @@
+
+{{- $component := .Values.gateway -}}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: {{ $component.name }}-istiod
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  gateways:
+  - {{ .Release.Namespace }}/{{ $component.name }}
+  hosts:
+  - istiod.{{ .Release.Namespace }}.svc
+  tls:
+  - match:
+    - port: 15443
+      sniHosts:
+      - istiod.{{ .Release.Namespace }}.svc
+    route:
+    - destination:
+        host: istiod.{{ .Release.Namespace }}.svc.cluster.local
+        port:
+          number: 15012
+  tcp:
+  - match:
+    - port: 15012
+    route:
+    - destination:
+        host: istiod.istio-system.svc.cluster.local
+        port:
+          number: 15012

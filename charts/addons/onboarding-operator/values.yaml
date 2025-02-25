@@ -1,0 +1,60 @@
+# Image configuration for the onboarding images.
+image:
+  # Image repository from where download the onboarding images.
+  repository:  addon-containers.istio.tetratelabs.com
+  # Onboarding image tag to be used.
+  tag:  0.1.0-onboarding-rc.1
+  # Image pull policy to be used to pull the onboarding images.
+  pullPolicy: IfNotPresent
+  # Image pull secret to be used to pull the onboarding images.
+  pullSecret: []
+
+# TODO add description for the helm chart values
+istio:
+  revisions: []
+
+onboarding:
+  endpoint:
+    host: onboarding-endpoint.example
+    tlsSecretName: onboarding-endpoint-tls-cert
+
+operator:
+  logLevel: "all:info"
+  kubeSpec:
+    deployment:
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+
+repository:
+  onboardingPackageIstioSidecar:
+    tag: 1.24.3-4fcf99438c
+  kubeSpec:
+    deployment:
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 10m
+          memory: 32Mi
+
+gateway:
+  name: vmgateway
+  network: "kube-network"
+  kubeSpec:
+    deployment:
+      replicaCount: 1
+      resources:
+        limits:
+          cpu: "1"
+          memory: 4Gi
+        requests:
+          cpu: 500m
+          memory: 2Gi

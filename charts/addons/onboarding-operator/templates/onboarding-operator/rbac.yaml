@@ -1,0 +1,201 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: onboarding-operator
+    app.kubernetes.io/name: onboarding-operator
+    {{- include "onboarding.labels" . | nindent 4 }}
+  name: istio-system-onboarding-operator
+rules:
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - '*'
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  - certificatesigningrequests/approval
+  - certificatesigningrequests/status
+  verbs:
+  - update
+  - create
+  - get
+  - delete
+- apiGroups:
+  - certificates.k8s.io
+  resourceNames:
+  - kubernetes.io/legacy-unknown
+  resources:
+  - signers
+  verbs:
+  - approve
+  - sign
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterrolebindings
+  - clusterroles
+  verbs:
+  - '*'
+- apiGroups:
+  - runtime.onboarding.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resourceNames:
+  - csr-signer
+  resources:
+  - secrets
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: onboarding-operator
+  name: istio-system-onboarding-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: istio-system-onboarding-operator
+subjects:
+- kind: ServiceAccount
+  name: onboarding-operator
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app: onboarding-operator
+  name: onboarding-operator
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups:
+  - ""
+  resourceNames:
+  - onboarding-operator-lock
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - update
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - update
+  - patch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - create
+  - update
+- apiGroups:
+  - apps
+  - extensions
+  - batch
+  resources:
+  - daemonsets
+  - deployments
+  - deployments/finalizers
+  - ingresses
+  - replicasets
+  - statefulsets
+  - cronjobs
+  verbs:
+  - '*'
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - '*'
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - '*'
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  verbs:
+  - '*'
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - destinationrules
+  - sidecars
+  verbs:
+  - '*'
+- apiGroups:
+  - security.istio.io
+  resources:
+  - peerauthentications
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - events
+  - namespaces
+  - pods
+  - persistentvolumeclaims
+  - secrets
+  - services
+  - serviceaccounts
+  verbs:
+  - '*'
+- apiGroups:
+  - install.onboarding.tetrate.io
+  - authorization.onboarding.tetrate.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: onboarding-operator
+  name: onboarding-operator
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: onboarding-operator
+subjects:
+- kind: ServiceAccount
+  name: onboarding-operator

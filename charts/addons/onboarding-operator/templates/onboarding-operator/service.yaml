@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: onboarding-operator
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: onboarding-operator
+    app.kubernetes.io/name: onboarding-operator
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  ports:
+  - name: webhook
+    port: 443
+    protocol: TCP
+    targetPort: 9443
+  selector:
+    app: onboarding-operator
