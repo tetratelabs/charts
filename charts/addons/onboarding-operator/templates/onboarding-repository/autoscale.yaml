@@ -1,0 +1,22 @@
+{{- $component := .Values.repository -}}
+{{- $kubeSpec := $component.kubeSpec -}}
+{{- if and $kubeSpec.deployment.hpaSpec $kubeSpec.deployment.hpaSpec.maxReplicas $kubeSpec.deployment.hpaSpec.minReplicas }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: onboarding-repository
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: onboarding-repository
+    app.kubernetes.io/name: onboarding-repository
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  maxReplicas: {{ $kubeSpec.deployment.hpaSpec.maxReplicas }}
+  minReplicas: {{ $kubeSpec.deployment.hpaSpec.minReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: onboarding-repository
+  metrics:
+{{ toYaml $kubeSpec.deployment.hpaSpec.metrics | indent 4 }}
+{{- end }}

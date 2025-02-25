@@ -1,0 +1,36 @@
+{{- $component := .Values.gateway -}}
+{{- $kubeSpec := $component.kubeSpec -}}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ $component.name }}
+    istio: ingressgateway
+    istio.io/rev: default
+    topology.istio.io/network: {{ $component.network }}
+    app.kubernetes.io/name: {{ $component.name }}
+    {{- include "onboarding.labels" . | nindent 4 }}
+  name: {{ $component.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: LoadBalancer
+  ports:
+  - name: status-port
+    port: 15021
+    protocol: TCP
+    targetPort: 15021
+  - name: tls
+    port: 15443
+    protocol: TCP
+    targetPort: 15443
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+  - name: tcp-istiod
+    port: 15012
+    protocol: TCP
+    targetPort: 15012
+  selector:
+    app: {{ $component.name }}
+    istio: ingressgateway

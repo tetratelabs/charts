@@ -1,0 +1,90 @@
+{{- $component := .Values.gateway -}}
+{{- $kubeSpec := $component.kubeSpec -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ $component.name }}
+    istio: ingressgateway
+    app.kubernetes.io/name: {{ $component.name }}
+    {{- include "onboarding.labels" . | nindent 4 }}
+  name: {{ $component.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ $kubeSpec.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ $component.name }}
+      istio: ingressgateway
+  template:
+    metadata:
+      annotations:
+        inject.istio.io/templates: gateway
+        prometheus.io/path: /stats/prometheus
+        prometheus.io/port: "15020"
+        prometheus.io/scrape: "true"
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: {{ $component.name }}
+        istio: ingressgateway
+        sidecar.istio.io/inject: "true"
+        app.kubernetes.io/name: {{ $component.name }}
+        {{- include "onboarding.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ $component.name }}-service-account
+      affinity:
+{{ toYaml $kubeSpec.deployment.affinity | indent 8 }}
+      securityContext:
+{{ toYaml $kubeSpec.deployment.podSecurityContext | indent 8 }}
+      containers:
+      - env:
+        - name: ISTIO_META_ROUTER_MODE
+          # enable "AUTO_PASSTHROUGH" for vmGateway https://github.com/istio/istio/blob/master/releasenotes/notes/sni-dnat-default.yaml
+          value: sni-dnat
+        - name: ISTIO_META_UNPRIVILEGED_POD
+          # The vmGateway does not need to run as root
+          value: "true"
+        - name: ISTIO_META_REQUESTED_NETWORK_VIEW
+          # The vmGateway only needs to see the endpoints in the the kubernetes network
+          value: {{ $component.network }}
+        image: auto
+        imagePullPolicy: IfNotPresent
+        name: istio-proxy
+        ports:
+        - containerPort: 15021
+          protocol: TCP
+        - containerPort: 15443
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        - containerPort: 15012
+          protocol: TCP
+        - containerPort: 15090
+          name: http-envoy-prom
+          protocol: TCP
+        resources:
+{{ toYaml $kubeSpec.deployment.resources | indent 10 }}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/istio/ingressgateway-certs
+          name: ingressgateway-certs
+          readOnly: true
+        - mountPath: /etc/istio/ingressgateway-ca-certs
+          name: ingressgateway-ca-certs
+          readOnly: true
+      securityContext:
+        runAsGroup: 1337
+        runAsNonRoot: true
+        runAsUser: 1337
+      volumes:
+      - name: ingressgateway-certs
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: istio-ingressgateway-certs
+      - name: ingressgateway-ca-certs
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: istio-ingressgateway-ca-certs

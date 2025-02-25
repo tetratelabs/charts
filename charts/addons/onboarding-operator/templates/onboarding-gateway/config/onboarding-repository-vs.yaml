@@ -1,0 +1,19 @@
+
+{{- $component := .Values.gateway -}}
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: {{ $component.name }}-onboarding-repository
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  gateways:
+  - {{ .Release.Namespace }}/{{ $component.name }}
+  hosts:
+  - {{ .Values.onboarding.endpoint.host }}
+  http:
+  - name: onboarding-repository
+    route:
+    - destination:
+        host: onboarding-repository.{{ .Release.Namespace }}.svc.cluster.local

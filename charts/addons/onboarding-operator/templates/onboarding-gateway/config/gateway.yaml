@@ -1,0 +1,54 @@
+
+{{- $component := .Values.gateway -}}
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: {{ $component.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    topology.istio.io/network: {{ $component.network }}
+    {{- include "onboarding.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ $component.name }}
+  servers:
+  - hosts:
+    - istiod.{{ .Release.Namespace }}.svc
+    port:
+      name: tls-istiod
+      number: 15443
+      protocol: TLS
+    tls:
+      mode: PASSTHROUGH
+  - hosts:
+    - '*'
+    port:
+      name: tcp-istiod
+      number: 15012
+      protocol: TCP
+  - hosts:
+    - {{ .Values.onboarding.endpoint.host }}
+    port:
+      name: tls-onboarding-plane
+      number: 15443
+      protocol: TLS
+    tls:
+      credentialName: {{ .Values.onboarding.endpoint.tlsSecretName }}
+      mode: SIMPLE
+  - hosts:
+    - '*'
+    port:
+      name: vm-to-k8s-services
+      number: 15443
+      protocol: TLS
+    tls:
+      mode: AUTO_PASSTHROUGH
+  - hosts:
+    - {{ .Values.onboarding.endpoint.host }}
+    port:
+      name: onboarding-repository-https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: {{ .Values.onboarding.endpoint.tlsSecretName }}
+      mode: SIMPLE
