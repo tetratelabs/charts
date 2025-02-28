@@ -23,3 +23,65 @@ To view all support configuration options and documentation, run:
 ```
 helm show values tetratelabs/onboarding-operator --devel
 ```
+
+## Supported TID Versions
+The supported TID versions are: 1.24.3-tetrate0, 1.24.3-tetrate1, 1.24.3-tetrate2, 1.24.3-tetrate3.
+
+## Installing the Chart
+
+Set the required variables for TIS credentials:
+
+```shell
+export TIS_USER="<tis-username>"
+export TIS_PASS="<tis-password>"
+```
+
+Then create a secret for the TIS add-ons repository. This will be used later to pull the Onboarding Operator image from the TIS add-ons repository.
+
+```shell
+kubectl create secret docker-registry tetrate-addons-creds \
+    --docker-server="addon-containers.istio.tetratelabs.com" \
+    --docker-username=${TIS_USER} \
+    --docker-password=${TIS_PASS} \
+    --docker-email="${USER}@" \
+    -n istio-system
+```
+
+Create a values file for the Onboarding Operator with the required values.
+Please note that the `repository.onboardingPackageIstioSidecar.tag` value should be aligned with the Istio version
+installed in the EKS cluster.
+
+```shell
+cat <<EOF > onboarding-operator-values.yaml
+image:
+  pullSecrets:
+    - name: tetrate-addons-creds
+repository:
+  onboardingPackageIstioSidecar:
+    tag: 1.24.3-tetrate3 # TID version installed in the EKS cluster
+EOF
+```
+
+Install the Onboarding Operator:
+
+```shell
+helm install onboarding-operator tis-addons/onboarding-operator \
+    --namespace istio-system \
+    --values onboarding-operator-values.yaml \
+    --version 0.1.0-rc.2 \
+    --devel
+```
+
+## Uninstalling the Chart
+
+First, delete the `onboarding-operator` deployment, the onboarding operator is watching the deletion of this deployment, and it will remove the resources created by the operator.
+
+```bash
+kubectl -n istio-system delete deploy onboarding-operator
+```
+
+Then, you can uninstall the chart with:
+
+```bash
+helm -n istio-system uninstall onboarding-operator
+```
