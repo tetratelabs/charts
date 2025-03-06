@@ -1,6 +1,8 @@
 {{- $component := .Values.repository -}}
 {{- $kubeSpec := $component.kubeSpec -}}
-{{- if and $kubeSpec.deployment.hpaSpec $kubeSpec.deployment.hpaSpec.maxReplicas $kubeSpec.deployment.hpaSpec.minReplicas }}
+{{- if $kubeSpec.deployment.hpaSpec }}
+{{- if $kubeSpec.deployment.hpaSpec.maxReplicas }}
+{{- if $kubeSpec.deployment.hpaSpec.minReplicas }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -19,4 +21,6 @@ spec:
     name: onboarding-repository
   metrics:
 {{ toYaml $kubeSpec.deployment.hpaSpec.metrics | indent 4 }}
+{{- end }}
+{{- end }}
 {{- end }}

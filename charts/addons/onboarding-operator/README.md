@@ -1,8 +1,8 @@
 # onboarding-operator
 
-![Version: 0.1.0-rc.2](https://img.shields.io/badge/Version-0.1.0--rc.2-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
-![AppVersion: 0.1.0-onboarding-rc.2](https://img.shields.io/badge/AppVersion-0.1.0--onboarding--rc.2-informational?style=flat-square)
+![AppVersion: 0.1.0-onboarding](https://img.shields.io/badge/AppVersion-0.1.0-onboarding--informational?style=flat-square)
 
 Helm chart for the Workload Onboarding Operator. It is used to onboard EC2 VMs and ECS tasks to an Istio service mesh installed on an EKS cluster.
 
@@ -11,7 +11,7 @@ Helm chart for the Workload Onboarding Operator. It is used to onboard EC2 VMs a
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | image.repository | string | `"addon-containers.istio.tetratelabs.com"` | Image repository from where download the onboarding images |
-| image.tag | string | `"0.1.0-onboarding-rc.2"` | Onboarding image tag to be used |
+| image.tag | string | `"0.1.0-onboarding"` | Onboarding image tag to be used |
 | image.pullSecrets | list | `[]` | Image pull secrets to be used to pull the onboarding images |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.onboardingPackageIstioSidecar.tag | string | `"1.24.3-tetrate3"` | Istio sidecar tag to be used for the onboarding workloads |
@@ -21,9 +21,8 @@ Helm chart for the Workload Onboarding Operator. It is used to onboard EC2 VMs a
 To view all support configuration options and documentation, run:
 
 ```
-helm show values tetratelabs/onboarding-operator --devel
+helm show values tetratelabs/onboarding-operator
 ```
-
 ## Supported TID Versions
 The supported TID versions are: 1.24.3-tetrate0, 1.24.3-tetrate1, 1.24.3-tetrate2, 1.24.3-tetrate3.
 
@@ -68,8 +67,7 @@ Install the Onboarding Operator:
 helm install onboarding-operator tis-addons/onboarding-operator \
     --namespace istio-system \
     --values onboarding-operator-values.yaml \
-    --version 0.1.0-rc.2 \
-    --devel
+    --version 0.1.0
 ```
 
 ## Uninstalling the Chart
