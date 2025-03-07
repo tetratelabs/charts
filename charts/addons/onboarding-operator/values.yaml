@@ -3,7 +3,7 @@ image:
   # Image repository from where download the onboarding images.
   repository:  addon-containers.istio.tetratelabs.com
   # Onboarding image tag to be used.
-  tag:  0.1.0-onboarding-rc.2
+  tag:  0.1.0-onboarding
   # Image pull policy to be used to pull the onboarding images.
   pullPolicy: IfNotPresent
   # Image pull secrets to be used to pull the onboarding images.
@@ -54,6 +54,8 @@ gateway:
   # The network that the gateway belongs to. The VMGateway is a east-west gateway and must know about the kubernetes network to route traffic.
   network: "kube-network"
   kubeSpec:
+    service:
+      annotations: {}
     deployment:
       replicaCount: 1
       resources:
