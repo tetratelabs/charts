@@ -44,6 +44,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: IGNORE_PILOT_AGENT_CA_ENVS
+          value: "true"
         - name: ONBOARDING_GATEWAY
           value: {{ .Values.gateway.name }}.{{ .Release.Namespace }}.svc.cluster.local
         securityContext:

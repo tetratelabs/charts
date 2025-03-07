@@ -10,6 +10,10 @@ metadata:
     topology.istio.io/network: {{ $component.network }}
     app.kubernetes.io/name: {{ $component.name }}
     {{- include "onboarding.labels" . | nindent 4 }}
+  {{- with $kubeSpec.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   name: {{ $component.name }}
   namespace: {{ .Release.Namespace }}
 spec:
