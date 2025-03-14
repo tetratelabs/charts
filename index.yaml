@@ -20738,6 +20738,31 @@ entries:
     urls:
     - https://archives.tetrate.io/istio-monitoring-demo-0.3.0/istio-monitoring-demo-0.3.0.tgz
     version: v0.1.0
+  - annotations:
+      tetrate.io/demo: "true"
+    apiVersion: v2
+    appVersion: v0.1.0
+    created: "2017-12-18T19:24:55Z"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 6.58.4
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 19.6.1
+    - condition: kube-state-metrics.enabled
+      name: kube-state-metrics
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 5.14.0
+    description: Helm chart for deploying Istio Monitoring demo
+    digest: e1fe2d34a9f7c94c7377325dc4ff233a37090ad4e431eac50ed3070e96ade772
+    name: istio-monitoring-demo
+    type: application
+    urls:
+    - https://archives.tetrate.io/istio-monitoring-demo-0.4.0/istio-monitoring-demo-0.4.0.tgz
+    version: 0.4.0
   istio-operator:
   - apiVersion: v2
     appVersion: 1.23.5-tetrate7
@@ -30692,6 +30717,16 @@ entries:
     version: 1.16.6+tetrate0
   onboarding-operator:
   - apiVersion: v2
+    appVersion: 0.1.0-onboarding
+    created: "2025-03-07T09:52:39.49685966Z"
+    description: Helm chart for the Onboarding Operator
+    digest: 92ba3c6144fa326a6e014ff373280dc05a8f7f44623a9b86f4f3d0b43375b92e
+    icon: https://docs.tetrate.io/logos/tetrate.svg
+    name: onboarding-operator
+    urls:
+    - https://archives.tetrate.io/onboarding-operator-0.1.0/onboarding-operator-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     appVersion: 0.1.0-onboarding-rc.2
     created: "2025-02-27T05:57:36.209107715Z"
     description: Helm chart for the Onboarding Operator
@@ -30731,16 +30766,6 @@ entries:
     urls:
     - https://archives.tetrate.io/onboarding-operator-0.1.0-rc.1/onboarding-operator-0.1.0-rc.1.tgz
     version: 0.1.0-onboarding-rc.1
-  - apiVersion: v2
-    appVersion: 0.1.0-onboarding
-    created: "2025-03-07T09:52:39.49685966Z"
-    description: Helm chart for the Onboarding Operator
-    digest: 92ba3c6144fa326a6e014ff373280dc05a8f7f44623a9b86f4f3d0b43375b92e
-    icon: https://docs.tetrate.io/logos/tetrate.svg
-    name: onboarding-operator
-    urls:
-    - https://archives.tetrate.io/onboarding-operator-0.1.0/onboarding-operator-0.1.0.tgz
-    version: 0.1.0
   - apiVersion: v2
     appVersion: 0.1.0-onboarding
     created: "2025-03-07T09:52:39.49685966Z"
